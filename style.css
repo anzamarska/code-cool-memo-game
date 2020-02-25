@@ -1,0 +1,43 @@
+.cards {
+  width: 70%;
+  height: 100vh; /* display card on grid */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 1rem;
+  margin: auto;
+  /* animation */
+  perspective: 70vh;
+}
+.card {
+  background-color: brown;
+  border-radius: 1rem; /* content: item */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border: 5px dotted black;
+  /* animation */
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+}
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.front {
+  display: none;
+}
+.back {
+  display: block;
+}
+
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}
+
+.flip {
+  transform: rotateY(360deg);
+}
