@@ -21,13 +21,19 @@ const cardsColor = [
 
 const setColorAmount = colorAmount => {
   const allGameColors = cardsColor.slice(0, colorAmount * 2);
-  return (allGameDivElements = allGameColors.map(item =>
-    document.createElement("div")
-  ));
+  return (allGameDivElements = allGameColors.map(item => {
+    let newDiv = document.createElement("div");
+    newDiv.innerHTML = "<h1>Hello</h1>";
+    my_div = document.getElementById("div1");
+    document.body.insertBefore(newDiv, my_div);
+  }));
 };
+
 console.log("test", setColorAmount(4));
 
-let cards = setColorAmount(4);
+document.body.createElement("div");
+
+let cards = setColorAmount(4); //document.querySelectorAll("div");
 cards = [...cards];
 
 const startTime = new Date().getTime();
