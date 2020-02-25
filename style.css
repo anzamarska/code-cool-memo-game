@@ -1,43 +1,60 @@
-.cards {
-  width: 70%;
-  height: 100vh; /* display card on grid */
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 1rem;
-  margin: auto;
-  /* animation */
-  perspective: 70vh;
-}
-.card {
-  background-color: brown;
-  border-radius: 1rem; /* content: item */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  border: 5px dotted black;
-  /* animation */
-  transform-style: preserve-3d;
-  transition: transform 0.5s;
-}
-img {
-  max-width: 100%;
-  max-height: 100%;
-}
-.front {
-  display: none;
-}
-.back {
-  display: block;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.show {
-  display: block;
-}
-.hide {
-  display: none;
+body {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.flip {
-  transform: rotateY(360deg);
+div{
+    flex-basis: 15%;
+    flex-grow: 1;
+    height: 33.33vh;
+    border: white 4px solid;
+}
+
+@media (orientation:portrait) {
+    div{
+        flex-basis: 30%;
+        height: 16.66vh;
+    }
+}
+
+.red {
+    background-color: red;
+}
+.green{
+    background-color: green;
+}
+.blue{
+    background-color: blue;
+}
+.yellow {
+    background-color: yellow;
+}
+.blueviolet{
+    background-color: blueviolet;
+}
+.pink{
+    background-color: pink;
+}
+.orange {
+    background-color: orange;
+}
+.darkcyan{
+    background-color: darkcyan;
+}
+.hotpink{
+    background-color: hotpink;
+}
+
+.off{
+    background-color: beige;
+}
+
+.hidden{
+    background-color: grey;
 }
