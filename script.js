@@ -1,35 +1,71 @@
-cards = document.querySelectorAll(".card");
-click = 0;
-previousCard = null;
+const cardsColor = ["red", "red", "green", "green", "blue", "blue", "yellow", "yellow", "blueviolet", "blueviolet", "pink", "pink", "orange", "orange", "darkcyan", "darkcyan", "hotpink", "hotpink"];
 
-cards.forEach(card => card.addEventListener("click", flip));
+let cards = document.querySelectorAll("div");
+cards = [...cards];
 
-function flip() {
-  click = click + 1;
-  this.classList.toggle("flip");
-  toggleImages(this);
+const startTime = new Date().getTime();
 
-  if (click % 2 == 1) {
-    previousCard = this;
-    return;
-  }
+let activeCard = "";
+const activeCards = [];
 
-  if (isMatch(previousCard, this)) {
-    alert("Hurra! You've matches!");
-    return;
-  }
+const gamePairs = cards.length / 2;
+let gameResult = 0;
 
-  toggleImages(this);
-  toggleImages(previousCard);
+const clickCard = function () {
+    activeCard = this;
+
+    if (activeCard == activeCards[0]) return;
+
+    activeCard.classList.remove("hidden");
+    if (activeCards.length === 0) {
+        activeCards[0] = activeCard;
+        console.log("1")
+        return;
+    } else {
+        console.log("2")
+        cards.forEach(card => card.removeEventListener("click", clickCard))
+        activeCards[1] = activeCard;
+
+        setTimeout(function () {
+
+            if (activeCards[0].className === activeCards[1].className) {
+                console.log("Win!")
+                activeCards.forEach(card => card.classList.add("off"))
+                gameResult++;
+                cards = cards.filter(card => !card.classList.contains("off"))
+                                     
+                                     
+                if (gameResult == gamePairs) {
+                    const endTime = new Date().getTime();
+                    const gameTime = (endTime - startTime) / 1000
+                    alert(`Win!!! Your game time is: ${gameTime} seconds.`)
+                    location.reload();
+                }
+            } else {
+                console.log("Chlip")
+                activeCards.forEach(card => card.classList.add("hidden"))
+            }
+            activeCard = ""
+            activeCards.length = 0;
+            cards.forEach(card => card.addEventListener("click", clickCard))
+        }, 500)
+    }
+};
+
+const init = function () {
+    cards.forEach(card => {
+        const position = Math.floor(Math.random() * cardsColor.length);
+        card.classList.add(cardsColor[position])
+        cardsColor.splice(position, 1);
+    })
+
+    setTimeout(function () {
+        cards.forEach(card => {
+            card.classList.add("hidden")
+            card.addEventListener("click", clickCard)
+        })
+    }, 3000)
+
 }
 
-function isMatch(firstCard, secondCard) {
-  img1 = firstCard.querySelector(".front").src;
-  img2 = secondCard.querySelector(".front").src;
-  return img1 == img2;
-}
-
-function toggleImages(card) {
-  card.querySelector(".front").classList.toggle("show");
-  card.querySelector(".back").classList.toggle("hide");
-}
+init()
