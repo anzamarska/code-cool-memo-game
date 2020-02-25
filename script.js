@@ -1,6 +1,33 @@
-const cardsColor = ["red", "red", "green", "green", "blue", "blue", "yellow", "yellow", "blueviolet", "blueviolet", "pink", "pink", "orange", "orange", "darkcyan", "darkcyan", "hotpink", "hotpink"];
+const cardsColor = [
+  "red",
+  "red",
+  "green",
+  "green",
+  "blue",
+  "blue",
+  "yellow",
+  "yellow",
+  "blueviolet",
+  "blueviolet",
+  "pink",
+  "pink",
+  "orange",
+  "orange",
+  "darkcyan",
+  "darkcyan",
+  "hotpink",
+  "hotpink"
+];
 
-let cards = document.querySelectorAll("div");
+const setColorAmount = colorAmount => {
+  const allGameColors = cardsColor.slice(0, colorAmount * 2);
+  return (allGameDivElements = allGameColors.map(item =>
+    document.createElement("div")
+  ));
+};
+console.log("test", setColorAmount(4));
+
+let cards = setColorAmount(4);
 cards = [...cards];
 
 const startTime = new Date().getTime();
@@ -11,61 +38,58 @@ const activeCards = [];
 const gamePairs = cards.length / 2;
 let gameResult = 0;
 
-const clickCard = function () {
-    activeCard = this;
+const clickCard = function() {
+  activeCard = this;
 
-    if (activeCard == activeCards[0]) return;
+  if (activeCard == activeCards[0]) return;
 
-    activeCard.classList.remove("hidden");
-    if (activeCards.length === 0) {
-        activeCards[0] = activeCard;
-        console.log("1")
-        return;
-    } else {
-        console.log("2")
-        cards.forEach(card => card.removeEventListener("click", clickCard))
-        activeCards[1] = activeCard;
+  activeCard.classList.remove("hidden");
+  if (activeCards.length === 0) {
+    activeCards[0] = activeCard;
+    console.log("1");
+    return;
+  } else {
+    console.log("2");
+    cards.forEach(card => card.removeEventListener("click", clickCard));
+    activeCards[1] = activeCard;
 
-        setTimeout(function () {
+    setTimeout(function() {
+      if (activeCards[0].className === activeCards[1].className) {
+        console.log("Win!");
+        activeCards.forEach(card => card.classList.add("off"));
+        gameResult++;
+        cards = cards.filter(card => !card.classList.contains("off"));
 
-            if (activeCards[0].className === activeCards[1].className) {
-                console.log("Win!")
-                activeCards.forEach(card => card.classList.add("off"))
-                gameResult++;
-                cards = cards.filter(card => !card.classList.contains("off"))
-                                     
-                                     
-                if (gameResult == gamePairs) {
-                    const endTime = new Date().getTime();
-                    const gameTime = (endTime - startTime) / 1000
-                    alert(`Win!!! Your game time is: ${gameTime} seconds.`)
-                    location.reload();
-                }
-            } else {
-                console.log("Chlip")
-                activeCards.forEach(card => card.classList.add("hidden"))
-            }
-            activeCard = ""
-            activeCards.length = 0;
-            cards.forEach(card => card.addEventListener("click", clickCard))
-        }, 500)
-    }
+        if (gameResult == gamePairs) {
+          const endTime = new Date().getTime();
+          const gameTime = (endTime - startTime) / 1000;
+          alert(`Win!!! Your game time is: ${gameTime} seconds.`);
+          location.reload();
+        }
+      } else {
+        console.log("Chlip");
+        activeCards.forEach(card => card.classList.add("hidden"));
+      }
+      activeCard = "";
+      activeCards.length = 0;
+      cards.forEach(card => card.addEventListener("click", clickCard));
+    }, 500);
+  }
 };
 
-const init = function () {
+const init = function() {
+  cards.forEach(card => {
+    const position = Math.floor(Math.random() * cardsColor.length);
+    card.classList.add(cardsColor[position]);
+    cardsColor.splice(position, 1);
+  });
+
+  setTimeout(function() {
     cards.forEach(card => {
-        const position = Math.floor(Math.random() * cardsColor.length);
-        card.classList.add(cardsColor[position])
-        cardsColor.splice(position, 1);
-    })
+      card.classList.add("hidden");
+      card.addEventListener("click", clickCard);
+    });
+  }, 3000);
+};
 
-    setTimeout(function () {
-        cards.forEach(card => {
-            card.classList.add("hidden")
-            card.addEventListener("click", clickCard)
-        })
-    }, 3000)
-
-}
-
-init()
+init();
