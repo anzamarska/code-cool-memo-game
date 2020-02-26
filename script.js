@@ -98,4 +98,4 @@ const init = function() {
   }, 3000);
 };
 
-init();
+document.body.appendChild(init());
