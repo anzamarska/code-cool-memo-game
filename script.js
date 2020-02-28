@@ -86,16 +86,16 @@ const init = function() {
 
   const renderCards = sortedCards.map(item => {
     const my_div = document.getElementById("div1");
-    document.body.insertBefore(item, my_div);
+    document.body.appendChild(item);
     return item;
   });
-
   setTimeout(function() {
     renderCards.forEach(card => {
       card.classList.add("hidden");
       card.addEventListener("click", clickCard);
     });
   }, 3000);
+
   return renderCards;
 };
 
